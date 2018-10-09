@@ -10,5 +10,5 @@ export class Ingredient {
 	// }
 
 	// short version of model
-	constructor(public name: string, public amout: number) {}
+	constructor(public name: string, public amount: number) {}
 }
