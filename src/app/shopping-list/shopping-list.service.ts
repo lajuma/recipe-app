@@ -1,10 +1,9 @@
 import { Ingredient } from "../shared/ingredient.model";
-import { EventEmitter } from "@angular/core";
 import { Subject } from "rxjs";
 
 export class ShoppingListService {
 
-  ingredientsChanged  = new EventEmitter<Ingredient[]>();
+  ingredientsChanged  = new Subject<Ingredient[]>();
   startedEditing = new Subject<number>();
 
   private ingredients: Ingredient[] = [
@@ -26,7 +25,7 @@ export class ShoppingListService {
   // former onIngredientAdded
   addIngredient(ingredient: Ingredient) {
     this.ingredients.push(ingredient);
-    this.ingredientsChanged.emit(this.ingredients.slice());
+    this.ingredientsChanged.next(this.ingredients.slice());
   }
 
   addIngredients(ingredients: Ingredient[]) {
@@ -46,7 +45,7 @@ export class ShoppingListService {
     // });
     // --> this will emit a lot of events, so we push first all ingredients and then emit one event instead:
     this.ingredients.push(...temp);
-    this.ingredientsChanged.emit(this.ingredients.slice());
+    this.ingredientsChanged.next(this.ingredients.slice());
   }
 
   updateIngredient(index: number, ingredient: Ingredient) {
